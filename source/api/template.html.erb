@@ -8,8 +8,25 @@
 <% if !functions.empty? %>
   <section class="sk-api-functions">
     <h2> Functions </h2>
-    <% functions.each do |function| %>
-      <%= partial 'partials/api/function', locals: { function: function } %>
+    <% functions.group_by { |fn| fn.name }.each do |group, functions| %>
+      <section class="sk-api-function sk-api-section" <%= "style='display:none'" unless functions.length > 1 %>>
+        <h3 id="group-<%= slug_for group %>" data-anchor> <%= group.to_human_case %> </h3>
+        <div class="sk-api-description">
+          There are multiple versions of <%= group.to_human_case %>:
+          <ul>
+            <% functions.each do |function| %>
+              <li>
+                <a href="<%= slug_url_for(function) %>">
+                  <%= group.to_human_case %> ( <%= function.parameters.map {|param_name, param_data| param_data.type.to_human_case }.join(", ") %> )
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </section>
+      <% functions.each do |function| %>
+        <%= partial 'partials/api/function', locals: { function: function } %>
+      <% end %>
     <% end %>
   </section>
 <% end %>
@@ -20,16 +37,6 @@
     <h2> Types </h2>
     <% types.each do |type| %>
       <%= partial 'partials/api/type', locals: { type: type } %>
-    <% end %>
-  </section>
-<% end %>
-
-<%# Macros %>
-<% if !defines.empty? %>
-  <section class="sk-api-defines">
-    <h2> Macros </h2>
-    <% defines.each do |define| %>
-      <%= partial 'partials/api/defines', locals: { define: define } %>
     <% end %>
   </section>
 <% end %>
