@@ -30354,7 +30354,8 @@
         "signatures": {
           "pascal": "function CreateJson(): Json",
           "cpp": "json create_json()"
-        }
+        },
+        "example": "create_json"
       },
       {
         "signature": "json create_json(string json_string);",

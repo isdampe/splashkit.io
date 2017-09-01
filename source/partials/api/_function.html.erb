@@ -64,5 +64,11 @@
       <dd>
         <%= snippet function.signatures %>
       </dd>
+      <% if function.example %>
+        <dt>Example</dt>
+        <dd>
+          <%= snippet function.example %>
+        </dd>
+      <% end %>
   <% end # if params || return %>
 </section>
